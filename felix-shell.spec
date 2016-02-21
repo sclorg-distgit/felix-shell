@@ -7,7 +7,7 @@
 
 Name:           %{?scl_prefix}%{pkg_name}
 Version:        1.4.3
-Release:        5.9%{?dist}
+Release:        5.10%{?dist}
 Summary:        Apache Felix Shell Service
 
 License:        ASL 2.0
@@ -18,11 +18,11 @@ BuildArch: noarch
 
 BuildRequires: %{?scl_prefix_java_common}javapackages-tools
 BuildRequires: %{?scl_prefix_java_common}maven-local
-BuildRequires: maven30-felix-osgi-core
-BuildRequires: maven30-felix-osgi-compendium
-BuildRequires: maven30-maven-clean-plugin
-BuildRequires: maven30-maven-plugin-bundle
-BuildRequires: maven30-felix-parent
+BuildRequires: %{?scl_prefix}felix-osgi-core
+BuildRequires: %{?scl_prefix}felix-osgi-compendium
+BuildRequires: %{?scl_prefix}maven-clean-plugin
+BuildRequires: %{?scl_prefix}maven-plugin-bundle
+BuildRequires: %{?scl_prefix}felix-parent
 
 
 %description
@@ -37,7 +37,7 @@ API documentation for %{pkg_name}.
 
 %prep
 %setup -q -n %{bundle}-%{version}
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 
 %pom_remove_plugin org.codehaus.mojo:rat-maven-plugin
@@ -46,13 +46,13 @@ set -e -x
 %{?scl:EOF}
 
 %build
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_build
 %{?scl:EOF}
 
 %install
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %mvn_install
  
@@ -64,6 +64,9 @@ set -e -x
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 1.4.3-5.10
+- maven33 rebuild #2
+
 * Sat Jan 09 2016 Michal Srb <msrb@redhat.com> - 1.4.3-5.9
 - maven33 rebuild
 
